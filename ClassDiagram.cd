@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Transport">
+    <Position X="8.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACIAAQAAgAAAAAAAAAAAABQAAAAAAQSAAAAIAAAAAGA=</HashCode>
+      <FileName>lab4.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ground_transport">
+    <Position X="11.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAABCAAAAAAAAACAAAAAAAAAAAAAAAAAFA=</HashCode>
+      <FileName>lab4.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Car">
+    <Position X="11.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAEAAAAAAAAAEQAAAEAAAAAABAAAABAI=</HashCode>
+      <FileName>lab4.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Water_Transport">
+    <Position X="5.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAQAEAAAAAgIAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>lab4.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Motor_Boat">
+    <Position X="5.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAIAAAAABAAAAAAAEAAAAkAAAAA=</HashCode>
+      <FileName>lab4.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Car_Amphib">
+    <Position X="8.25" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAEAAAAAQQAAQAAAAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>lab4.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
