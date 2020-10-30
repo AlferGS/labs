@@ -22,36 +22,15 @@ public:
 		//cout <<this << " - ~Transport()" << endl;
 	}
 
-	/*virtual void input_Transport()
-	{
-		string dtmp, itmp;
-		if (this->body_material == "empty" || this->body_material == "") {
-			cout << "Input Transport()" << endl;
-			cout << "Enter body material - ";
-			cin >> this->body_material;
-		}
-		if (this->engine_volume == NULL) {
-			cout << "Enter engine volume - ";
-			cin >> dtmp;
-			this->engine_volume = double_check(dtmp);
-		}
-		if (this-> tank_size == NULL) {
-			cout << "Enter tank size - ";
-			cin >> itmp;
-			this->tank_size = int_check(itmp);
-		}
-	}*/
-
 	virtual void T_show()
 	{
 		cout << endl;
-		flagpoint = 0;
 		if (flagpoint == 0) {
 			cout << "Transport Show:" << endl;
 			cout << "body_material - " << this->body_material << endl;;
 			cout << "endgine_volume - " << this->engine_volume << endl;
 			cout << "tank_size - " << this->tank_size << endl;
-			//flagpoint++;
+			flagpoint++;
 		}
 		else 
 		{
@@ -85,16 +64,6 @@ public:
 		//cout << this << "~Ground_Transport()" << endl;
 	}
 
-	//void input_GT() 
-	//{
-	//	string tmpint;
-	//	cout << "input GT" << endl;
-	//	cout << "Enter num_of_wheels - ";
-	//	cin >> tmpint;
-	//	this->num_of_wheels = int_check(tmpint);
-	//	this->input_Transport();
-	//}
-
 	void GT_show()
 	{
 		cout << endl;
@@ -124,18 +93,6 @@ public:
 		//cout << "~Car()" << endl;
 	}
 
-	//void input_Car()
-	//{
-	//	string inttmp;
-	//	cout << "input_Car:" << endl;
-	//	cout << "Enter trunk capacity - ";
-	//	cin >> inttmp;
-	//	this->trunk_capacity = int_check(inttmp);
-	//	cout << "Enter gearbox - ";
-	//	cin >> this->gearbox;
-	//	this->input_GT();
-	//}
-
 	void Car_show()
 	{
 		cout << endl;
@@ -164,15 +121,6 @@ public:
 		//cout << "~Water_Transport()" << endl; 
 	}
 
-	/*void input_Water_Transport()
-	{
-		string int_tmp;
-		cout << "input_Water_Transport:" << endl;
-		cout << "Enter displacement - ";
-		cin >> int_tmp;
-		this->displacement = this->int_check(int_tmp);
-		this->input_Transport();
-	}*/
 
 	void WT_show()
 	{
@@ -201,15 +149,6 @@ public:
 		//cout << "~Motor_Boat()" << endl;
 	}
 
-	//void input_Motor_Boat()
-	//{
-	//	string doubletmp;
-	//	cout << "input_Motor_Boat:" << endl;
-	//	cout << "Enter angle at the roll - ";
-	//	cin >> doubletmp;
-	//	this->angle_at_the_roll = double_check(doubletmp);
-	//	this->input_Water_Transport();
-	//}
 
 	void MB_show()
 	{
@@ -238,14 +177,6 @@ public:
 		//cout << "~Car_Amphib()" << endl;
 	}
 
-	//virtual void input_Car_Amphib()
-	//{
-	//	cout << "input Car_Amphib:" << endl;
-	//	cout << "Have you water cannon - ";
-	//	cin >> this->water_cannon;
-	//	this->input_Car();
-	//	this->input_Motor_Boat();
-	//}
 
 	void CA_show()
 	{
@@ -393,14 +324,8 @@ int main(void)
 	Car_Amphib CA(water_gun, gearbox, trunk_capacity, num_of_wheels, angle_at_the_roll, displacement, tank_size, engine_volume, body_material);
 
 
-	Motor_Boat MB(angle_at_the_roll, displacement, tank_size, engine_volume, body_material);
-	Car C(trunk_capacity, gearbox, num_of_wheels, tank_size, engine_volume, body_material);
-	
-	MB.MB_show();
-	cout << endl;
+	CA.CA_show();
 
-	//MB.T_show();
-	C.Car_show();
 
 }
 
