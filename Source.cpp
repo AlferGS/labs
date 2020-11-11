@@ -1,548 +1,215 @@
 #include <iostream>
 using namespace std;
 
-class classname
+static int flagpoint = 0;
+
+class Transport
 {
-	int **p;
-	int rows, colums;
 public:
-
-	/////////////////////////////////////////////////////		//Constructors//
-
-	classname(int rs = 2, int cs = 3)								
-	{
-		rows = rs;
-		colums = cs;
-		p = new int *[rs];
-		for (int i = 0; i < rs; i++)
-		{
-			p[i] = new int[cs];
-		}
-		if (!p) exit(1);
-		cout << this << "classname(int sz)" << endl;
-	}
-
-	classname(const classname& name)
-		:rows(name.rows), colums(name.colums) // инициализация строк и столбцов
-	{
-		p = new int*[rows];
-		for (int i = 0; i < rows; i++) {
-			p[i] = new int[colums];
-		}
-		if (!p) exit(1);
-		for (int i = 0; i < rows; i++)
-			for(int j = 0 ; j< colums; j++)
-				this->p[i][j] = name.p[i][j];
-		cout << this <<"classname(const classname &)" << endl;
-	}
-
-	~classname()
-	{
-		for (int i = 0; i < rows; i++)
-		{
-			delete[] p[i];
-		}
-		delete []p;
-		cout << this <<"~classname()" << endl;
-	}
-	///////////////////////////////////////////////////////////////////		 C-end
-
-	///////////////////////////////////////////////////////////////////		//Operators
-	friend classname operator+(classname &obj1, classname &obj2);
-	friend classname operator+ (classname &obj1, int x);
-	friend classname operator- (classname &obj1, classname &obj2);
-	friend classname operator- (classname &obj1, int x);
-
-	classname operator& (classname& obj2)
-	{
-		int temp_num = 0, sum = 0;
-		if (this->rows == obj2.colums)
-		{
-			classname temp(this->rows, obj2.colums);												
-			for (int ii = 0; ii < this->rows; ii++)
-			{
-				for (int i = 0; i < obj2.colums; i++)
-				{
-					for (int j = 0; j < this->colums; j++)
-					{
-						temp_num = this->p[ii][j] * obj2.p[j][i];
-						sum += temp_num;
-					}
-					temp.p[ii][i] = sum;
-					sum = 0;
-				}
-			}
-			return (temp);
-		}
-		else
-		{
-			cout << "warning& " << endl;
-		}
-	}
-
-	int operator() (int rows, int colums)
-	{
-		if (colums >= 0 && colums < this->get_colums())
-		{
-			if (rows >= 0 && rows < this->get_rows())
-			{
-				return this->p[rows][colums];
-			}
-		}
-		else
-		{
-			cout << "warning operator()" << endl;
-			return 0;
-		}
-	}
-
-	classname operator= (classname name)
-	{
-		int tmp = this->rows; this->rows = name.rows; name.rows = tmp;
-		tmp = this->colums; this->colums = name.colums; name.colums = tmp;
-		int** ptmp = this->p; this->p = name.p; name.p = ptmp;
-		return *this;
-	}
-	////////////////////////////////////////////////////////////	O-end
-
-	///////////////////////////////////////////////////////////		//Function
-	void matrix_input()
-	{
-		cout << endl << "Matrix(input)" << endl;
-		for (int i = 0; i < this->rows; i++)
-		{
-			for (int j = 0; j < this->colums; j++)
-			{
-				string s;
-				cin >> s;
-				this->p[i][j] = check(s);
-			}
-		}
-	}
-
-	int check(string s)
-	{
-		int ii = 0, n = 0;
-		while (s[ii])
-		{
-			if (int(s[ii]) >= 48 && s[ii] <= 57)
-			{
-				n = n * 10 + int(s[ii] - 48);
-			}
-			else
-			{
-				cin.clear();
-				cin.ignore(54321, '\n');
-				cout << "error input. try again" << endl;
-				cin >> s;
-				return check(s);
-			}ii++;
-		}
-		return n;
-	}
-
-	int get_rows(){
-		return rows;
-	}
-
-	int get_colums() {
-		return colums;
-	}
-
-	void change_el() 
-	{
-		int i, j, n;
-		cout << "Enter row num - ";
-		while (true) {
-			cin >> i;
-			cin.clear();
-			cin.ignore(54321, '\n');
-			if (!i) { cout << "input error change_el [i]" << endl; }
-			else { break; }
-		}i--;
-
-		cout << "Enter colum num - ";
-		while (true) {
-			cin >> j;
-			cin.clear();
-			cin.ignore(54321, '\n');
-			if (!j) { cout << "input error change_el [j]" << endl; }
-			else { break; }
-		}j--;
-
-		cout << "Enter num - ";
-		while (true) {
-			cin >> n;
-			cin.clear();
-			cin.ignore(54321, '\n');
-			if (!n) { cout << "input error change_el[n]" << endl; }
-			else { break; }
-		}
-		this->p[i][j] = n;
-	}
-
-	void show_el(classname &name)
-	{
-		int i, j;
-		cout << "Enter row num - ";
-		while (true) {
-			cin >> i;
-			cin.clear();
-			cin.ignore(54321, '\n');
-			if (!i) { cout << "input error show_el[i]" << endl; }
-			else { break; }
-		}i--;
-		cout << "Enter colum num - ";
-		while (true) {
-			cin >> j;
-			cin.clear();
-			cin.ignore(54321, '\n');
-			if (!j) { cout << "input error show_el[j]" << endl; }
-			else { break; }
-		}j--;
-		cout << "Your num on [" << i << "][" << j << "] - " << name(i,j) << endl;
-	}
-
-	void show()
-	{
-		cout << endl << "Matrix(show)" << endl;
-		for (int i = 0; i < rows; i++)
-		{
-			for (int j = 0; j < colums; j++)
-			{
-				cout << "[" << p[i][j] << "]";
-			}
-			cout << endl;
-		}
-	}
-	/////////////////////////////////////////////////////////////		F-end
+	string name;
+	virtual void show() = 0;
+	virtual double get_double() = 0;
+	virtual int get_int() = 0;
 };
 
-classname operator+ (classname &obj1, classname &obj2)
+class Ground_Transport : public Transport
 {
-	classname temp(obj1.rows, obj2.colums);
-	if (obj1.rows == obj2.rows || obj1.colums == obj2.colums)
-	{
-		for (int i = 0; i < obj1.rows; i++)
-		{
-			for (int j = 0; j < obj2.colums; j++)
-			{
-				temp.p[i][j] = obj1.p[i][j] + obj2.p[i][j];
-			}
+protected:
+	int num_of_wheels;
+
+public:
+	Ground_Transport(int NoW = 0, string nam = "") :Transport(), num_of_wheels(NoW) { name = nam; }
+	~Ground_Transport() {}
+
+	void show() override{
+		cout << endl << "GT show:" << endl;
+		cout << "num of wheels - " << num_of_wheels << endl;
+		cout << "name - " << name << endl;
+	}
+	double get_double() override { return 0; }
+	int get_int() override { return num_of_wheels; }
+};
+
+class Water_Transport : public Transport
+{
+protected:
+	int displacement;
+
+public:
+	Water_Transport(int displacemnt = 0, string nam = "") : Transport(), displacement(displacemnt) { name = nam; }
+	~Water_Transport() {}
+
+	void show() override{
+		cout << endl;
+		cout << "WT_show" << endl;
+		cout << "displacement - " << this->displacement << endl;
+		cout << "name - " << name << endl;
+	}
+
+	double get_double() override { return 0; }
+	int get_int() override { return displacement; }
+};
+
+class Motor_Boat : public Water_Transport
+{
+protected:
+	double angle_at_the_roll;					// угол наклона при крене
+
+public:
+	Motor_Boat(double aatr = 0.0, int displacemnt = 0, string nam = "") :Water_Transport(displacemnt), angle_at_the_roll(aatr) { name = nam; }
+	~Motor_Boat() {}
+
+	double get_double() override { return angle_at_the_roll; }
+	int get_int() override { return displacement; }
+	void show() override{
+		cout << endl;
+		cout << "MB_show:" << endl;
+		cout << "angle_at_the_roll - " << angle_at_the_roll << endl;
+		cout << "displacement - " << displacement << endl;
+		cout << "name - " << name << endl;
+	}
+};
+
+int int_check(string s)
+{
+	int i = 0, n = 0;
+	while (s[i]){
+		if (int(s[i]) >= 48 && s[i] <= 57){
+			n = n * 10 + int(s[i] - 48);
 		}
-		return (temp);
+		else{
+			cin.clear();
+			cin.ignore(54321, '\n');
+			cout << "error input. try again" << endl;
+			cin >> s;
+			return int_check(s);
+		}
+		i++;
 	}
-	else
-	{
-		cout << "warning +" << endl;
-	}
+	return n;
 }
 
-classname operator+ (classname &obj1, int x)
+double double_check(string s)
 {
-	classname temp(obj1.rows, obj1.colums);
-	for (int i = 0; i < obj1.rows; i++)
-	{
-		for (int j = 0; j < obj1.colums; j++)
-		{
-			temp.p[i][j] = obj1.p[i][j] + x;
+	int i = 0, flg = 0;
+	double in = 0, dn = 0;
+	while (s[i]){
+		if (int(s[i]) >= 48 && int(s[i]) <= 57 && s[i] != '\0'){
+			i++;
+			continue;
+		}
+		else if (char(s[i]) == '.' && flg == 0){
+			flg = 1;
+			i++;
+			continue;
+		}
+		else{
+			cin.clear();
+			cin.ignore(54321, '\n');
+			cout << "error input. try again" << endl;
+			cin >> s;
+			return double_check(s);
 		}
 	}
-	return (temp);
-}
+	int j = i;
+	i = 0; flg = 0;
 
-classname operator- (classname &obj1, classname &obj2)
-{
-	if (obj1.rows == obj2.rows || obj1.colums == obj2.colums)
-	{
-		classname temp(obj1.rows, obj1.colums);
-		for (int i = 0; i < obj2.rows; i++)
-		{
-			for (int j = 0; j < obj2.colums; j++)
-			{
-				temp.p[i][j] = obj1.p[i][j] - obj2.p[i][j];
-			}
-
+	while (flg == 0){
+		if (s[i] == '.'){
+			flg = 1;
+			break;
 		}
-		return (temp);
-	}
-	else
-	{
-		cout << "warning -" << endl;
-	}
-}
-
-classname operator- (classname &obj1, int x)
-{
-	classname temp(obj1.rows, obj1.colums);
-	for (int i = 0; i < obj1.rows; i++)
-	{
-		for (int j = 0; j < obj1.colums; j++)
-		{
-			temp.p[i][j] = obj1.p[i][j] - x;
+		if (int(s[i])){
+			in = in * 10 + double(double(s[i]) - 48);
+			i++;
+		}
+		else{
+			break;
 		}
 	}
-	return (temp);
+	int x = i;
+	i++;
+
+	while (flg == 1){
+		if (i < j) {
+			dn = dn + double(double(s[i]) - 48) / (pow(10, i - x));
+			i++;
+		}
+		else{
+			flg = 0;
+		}
+	}
+	in = in + dn;
+	return in;
 }
 
-
-													//Main
 int main(void)
 {
-	classname a(2, 3), b;
-	int x;
+	int num_of_wheels, displacement;
+	double angle_at_the_roll;
+	string name;
+	Transport* pTransport[3];
 
-	a.matrix_input();
-	cout << "operator obj+int " << endl;
-	cout << "Enter x - ";
-	cin >> x;
-	cin.clear();
-	b = a + x;
-	cout << "Show(+):";
-	a.show();
-	b.show();
+	string itmp, dtmp;
 
+	cout << endl << "Enter name(string) - ";		//ground transport
+	cin >> name;
+	cout << endl;
 
-	cout << "operator obj-int " << endl;
-	cout << "Enter x - ";
-	cin >> x;
-	b = b - x;
-	cout << "Show(-):";
-	a.show();
-	b.show();
+	cout << "Enter angle at de roll(doub) - ";		//Motor Boat
+	cin >> dtmp;
+	angle_at_the_roll = double_check(dtmp);
 
+	cout << endl << "Enter displacement(int) - ";		//water transport
+	cin >> itmp;
+	displacement = int_check(itmp);
 
-	cout << "operator obj+obj " << endl;
-	classname c(a.get_rows(), a.get_colums());
-	c = a + b;
-	cout << "Show(+):";
-	c.show();
+	cout << endl << "Enter num_of_wheels(int) - ";		//ground transport
+	cin >> itmp;
+	num_of_wheels = int_check(itmp);
+
+	cout << "Input end" << endl;
 
 
-	cout << endl<< "operator obj-obj " << endl;
-	c = a - b;
-	cout << "Show(-):";
-	c.show();
+	cout << endl << "-------------------------" << endl;
+	Motor_Boat MB(angle_at_the_roll, 123, name);
+	pTransport[0] = &MB;
 
 
-	cout << "operator obj&obj " << endl;
-	classname d(a.get_rows(), b.get_colums());
-	classname f(a.get_colums(), a.get_rows());
-	f.matrix_input();
-	d = a & f;
-	cout <<"Show(&) = " << endl;
-	d.show();
+	cout << endl << "Enter displacement(int) - ";		//water transport
+	cin >> itmp;
+	displacement = int_check(itmp);
 
-	cout << endl << "exaple operator()";
-	cout << a(0, 0) << endl << b(1, 1) << endl << d(1, 2) << endl;;
-	
+	cout << endl << "Enter name(string) - ";		//ground transport
+	cin >> name;
+	cout << endl;
 
-	//classname a(2, 3), b(2, 3), e(3, 2);
-	//a.matrix_input();
-	//a.show();
-	//cin.clear();
-	//b.matrix_input();
-	//b.show();
-	//e.matrix_input();
-	//e.show();
-	//cout << endl << "input is end" << endl;
-	//
+	cout << "----------------------------" << endl;
+	Water_Transport WT(displacement, name);
+	pTransport[1] = &WT;
 
-	//cout << endl << "Sum a+b = " << endl;
-	//classname r;
-	//r = a + b;
-	//r.show();
-	//r.~classname();
 
-	//cout << endl << "Diff a-b = " << endl;
-	//classname l = a - b;
-	//l.show();
-	//l.~classname();
+	cout << endl << "Enter name(string) - ";		//ground transport
+	cin >> name;
+	cout << endl;
 
-	//cout << endl << "Prod a&e = " << endl;
-	//classname d(a.get_rows(), e.get_colums());
-	//d = a & e;
-	//d.show();
-	//d.~classname();
+	cout << endl << "Enter num_of_wheels(int) - ";		//ground transport
+	cin >> itmp;
+	num_of_wheels = int_check(itmp);
 
-	//cout << "Math action complited" << endl;
+	cout << "----------------------------" << endl;
+	Ground_Transport GT(num_of_wheels, name);
+	pTransport[2] = &GT;
 
-	//a.change_el();	b.change_el();
-	//a.show_el(a);	b.show_el(b);
 
-	//cout << "It was result of function" << endl;
-
-	//cout << "Operator()" << endl;
-	//cout << a(0, 1) << endl << b(1, 2) << endl;
-	//a.show();
-	//b.show();
-
-	//int row, col;
-	//cout << "Enter num rows - " << endl;
-	//while (true)
-	//{
-	//	cin >> row;
-	//	cin.clear();
-	//	cin.ignore(54321, '\n');
-	//	if (!row) { cout << "input error row" << endl; }
-	//	else { break; }
-	//}
-
-	//cout << "Enter num colums - " << endl;
-	//while (true)
-	//{
-	//	cin >> col;
-	//	cin.clear();
-	//	cin.ignore(54321, '\n');
-	//	if (!col) {
-	//		cout << "input error col" << endl;
-	//	}
-	//	else { break; }
-	//}
-	//cout << "Create new obj" << endl;
-	//classname obj(row,col);
-	//obj.matrix_input();
-	//classname t(row, col);
-	//t.matrix_input();
-	//cout << " obj + t" << endl;
-	//classname copy = obj + t;
-	//obj.show();
-	//copy.show();
-
-	/////////////////////////////		//Matrix (10)
-	//int size;
-	//cout << "Enter size - " << endl;
-	//while (true)
-	//{
-	//	cin >> size;
-	//	cin.clear();
-	//	cin.ignore(54321, '\n');
-	//	if (!size) { cout << "input error size" << endl; }
-	//	else { break; }
-	//}
-
-	//classname matrix[3];
-	//for (int i = 0; i < 3; i++)
-	//{
-	//	matrix[i].matrix_input();
-	//}
-	//for (int i = 0; i < 3; i++)
-	//{
-	//	matrix[i].show();
-	//}
+	pTransport[0]->show();
+	pTransport[1]->show();
+	pTransport[2]->show();
 }
-
-
-
-
-	//classname operator+ (classname& obj1, classname& obj2)							// перегрузить для разных типов операторов
-	//{
-	//	classname temp(obj1.rows, obj1.colums);
-	//	if (obj1.rows == obj2.rows || obj1.colums == obj2.colums)
-	//	{
-	//		for (int i = 0; i < obj1.rows; i++)
-	//		{
-	//			for (int j = 0; j < obj2.colums; j++)
-	//			{
-	//				temp.p[i][j] = obj1.p[i][j] + obj2.p[i][j];
-	//			}
-	//		}
-	//		return (temp);
-	//	}
-	//	else
-	//	{
-	//		cout << "warning +" << endl;
-	//	}
-	//}
-
-	//friend classname operator+ (classname &obj1, int x)							// перегрузить для разных типов операторов
-	//{
-	//	classname temp(obj1.rows, obj1.colums);
-	////	if (obj1.rows == obj2.rows || obj1.colums == obj2.colums)
-	//	//{
-	//		for (int i = 0; i < obj1.rows; i++)
-	//		{
-	//			for (int j = 0; j < obj1.colums; j++)
-	//			{
-	//				temp.p[i][j] = obj1.p[i][j] + x;
-	//			}
-	//		}
-	//		return (temp);
-	//	//}
-	////	else
-	//	//{
-	//		//cout << "warning +" << endl;
-	//	//}
-	//}
-
-	//friend classname operator- (classname& obj1, classname& obj2)
-	//{
-	//	if (obj1.rows == obj2.rows || obj1.colums == obj2.colums)
-	//	{
-	//		classname temp(obj1.rows, obj1.colums);
-	//		for (int i = 0; i < obj2.rows; i++)
-	//		{
-	//			for (int j = 0; j < obj2.colums; j++)
-	//			{
-	//				temp.p[i][j] = obj1.p[i][j] - obj2.p[i][j];
-	//			}
-
-	//		}
-	//		return (temp);
-	//	}
-	//	else
-	//	{
-	//		cout << "warning -" << endl;
-	//	}
-	//}
-
-	//classname operator& (classname &obj2)
-	//{
-	//	int temp_num = 0, sum = 0;
-	//	if (this->rows == obj2.colums)
-	//	{
-	//		classname temp(this->rows, obj2.colums);												//!!!!!			//error
-	//		for (int ii = 0; ii < this->rows; ii++)
-	//		{
-	//			for (int i = 0; i < obj2.colums; i++)
-	//			{
-	//				for (int j = 0; j < this->colums; j++)
-	//				{
-	//					temp_num = this->p[ii][j] * obj2.p[j][i];
-	//					sum += temp_num;
-	//				}
-	//				temp.p[ii][i] = sum;
-	//				sum = 0;
-	//			}
-	//		}
-	//		return (temp);
-	//	}
-	//	else
-	//	{
-	//		cout << "warning& " << endl;
-	//	}
-	//}
-
-	//int operator() (int rows, int colums)
-	//{
-	//	if (colums >= 0 && colums < get_colums())
-	//	{
-	//		if (rows >= 0 && rows < get_rows())
-	//		{
-	//			return p[rows][colums];
-	//		}
-	//	}
-	//	else 
-	//	{
-	//		cout << "warning operator()" << endl;
-	//		return 0;
-	//	}
-	//}
-
-	//classname operator= (classname name)
-	//{
-	//	int tmp = rows; rows = name.rows; name.rows = tmp;
-	//	tmp = colums; colums = name.colums; name.colums = tmp;
-	//	int** ptmp = p; p = name.p; name.p = ptmp;
-	//	return *this;
-	//}
+/*
+			  transport														  |  	|
+			/           \
+		  GT             WT										   NoW(i)                displcmnt(i)
+						   \
+							motor boat                                                      angle atthrl(d)
+*/
